@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link
+            rel="shortcut icon"
+            href="data:image/x-icon;,"
+            type="image/x-icon"
+        />
+        <script type="module">
+            import hydrate from '../src/index.js'
+
+            window.addEventListener('DOMContentLoaded', async () => {
+                requestAnimationFrame(async () => {
+                    hydrate(document.body)
+                })
+            })
+        </script>
+        <style>
+            .selected {
+                background-color: lightblue;
+            }
+            [x-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div
+            x-data="{
+                name: 'Product Title',
+                price: 7.99,
+                quantity: 1,
+                selected: false,
+                tags: ['hello', 'world']
+            }"
+        >
+            <h1 x-text="this.name"></h1>
+            <span x-cloak x-text="this.price"></span>
+            <button @click="if (this.quantity > 0) this.quantity--">-</button
+            ><input
+                type="number"
+                x-value="this.quantity"
+                @change="this.quantity = $el.value"
+            /><button @click="this.quantity++">+</button>
+            <span
+                x-text="this.selected"
+                x-class="{'selected marked': this.selected}"
+            ></span>
+            <button @click="this.selected = !this.selected">toggle</button>
+            <span x-html="'<span>inserted html</span>'"></span>
+            <div style="display: grid; gap: 1rem;">
+                <div x-map="this.tags.map((tag, i) => ({tag, i}))" x-cloak>
+                    <div x-text="this.tag"></div>
+                    <div x-text="this.i"></div>
+                    <button @click="this.i++">add</button>
+                </div>
+            </div>
+            <button @click="this.tags = [...this.tags, ...this.tags]">double</button>
+        </div>
+    </body>
+</html>

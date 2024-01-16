@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "sirv-cli": "^2.0.2"
+  },
+  "scripts": {
+    "start": "npx sirv . -D -p 3000 -q"
+  }
+}
